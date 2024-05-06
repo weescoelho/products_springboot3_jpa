@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.weescoelho.products_api.entities.Category;
 import com.weescoelho.products_api.entities.Order;
 import com.weescoelho.products_api.entities.OrderItem;
+import com.weescoelho.products_api.entities.Payment;
 import com.weescoelho.products_api.entities.Product;
 import com.weescoelho.products_api.entities.User;
 import com.weescoelho.products_api.entities.enums.OrderStatus;
@@ -82,6 +83,12 @@ public class TestConfig implements CommandLineRunner {
 
     orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
+    // Na associação 1:1 o JPA cuida de salvar a entidade dependente. Não há
+    // necessidade de repo
+    Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+    o1.setPayment(pay1);
+
+    orderRepository.save(o1);
   }
 
 }
